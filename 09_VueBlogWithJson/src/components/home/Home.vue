@@ -12,7 +12,7 @@ const router = useRouter();
         <video id="first-video" src="../../assets/video/KakaoTalk_20240612_100738326.mp4" autoplay muted loop></video>
 
         <p>
-            <button class="font1" @click="$router.push('/reMenu');"> 주문하기</button>
+            <button class="font1" @click="$router.push('/Menu');"> 주문하기</button>
         </p>
     </div>
 </template>

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/home/Home.vue'
 import ReMenu from '../components/menu/ReMenu.vue'
-import DetailsView from '@/components/menu/DetailsView.vue'
 import Coffee from '../components/menu/Coffee.vue'
 import DeCoffee from '../components/menu/DeCoffee.vue'
 import Smoothie from '../components/menu/Smoothie.vue'
@@ -16,6 +15,9 @@ import Popupview from '../components/pay/Popupview.vue'
 import Popupview2 from '../components/pay/Popupview2.vue'
 import PayView from '../views/PayView.vue'
 import OrderReceipt from '../components/bill/OrderReceipt.vue'
+import Menu from '../views/Menu.vue';
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -100,13 +102,10 @@ const router = createRouter({
       component: Dessert
     },
     {
-      path: '/:category/:id',
-      name: 'detail',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: DetailsView//() => import('../views/AboutView.vue')
-    }
+      path: '/menu',
+      name: 'menu',
+      component: Menu
+    },
   ]
 })
 

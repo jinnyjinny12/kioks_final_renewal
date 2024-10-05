@@ -1,33 +1,39 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { useDeCoffeeStore } from "@/stores/menu";
+import { useCoffeeStore } from "@/stores/menu";
 import { onMounted } from "vue";
 
 const router = useRouter();
-const { deCoffee } = defineProps(["deCoffee"]);
+const { coffee } = defineProps(["coffee"]);
 
 function detailView(id) {
-    router.push(`/deCoffee/${id}`);
+    router.push(`/coffee/${id}`);
 }
 
-const deCoffeeStore = useDeCoffeeStore();
+const coffeeStore = useCoffeeStore();
 
 onMounted(() => {
-    deCoffeeStore.deCoffeeHandler();
+    coffeeStore.coffeeHandler();
 })
 </script>
 
 <template>
+    <nav>
+        <RouterLink to="/reMenu">추천메뉴</RouterLink>
+        <RouterLink to="/coffee">커피</RouterLink>
+        <RouterLink to="/deCoffee">디카페인</RouterLink>
+        <RouterLink to="/smoothie">스무디</RouterLink>
+        <RouterLink to="/teaAde">티,에이드</RouterLink>
+        <RouterLink to="/dessert">디저트</RouterLink>
+        <RouterLink to="/order">주문내역</RouterLink>      
+      </nav>
 
     <main>
-        <div v-for="deCoffee in deCoffeeStore.deCoffees" class="listBox">
-            <div :key="deCoffee.id" :deCoffee="deCoffee" @click="detailView(deCoffee.id)" class="itemBox">
-                <div> {{ deCoffee.name }}</div>
-                <div> 가격 {{ deCoffee.price }}</div>
-                <img :src="deCoffee.img" class="itemImage" />
-            </div>
-        </div>
+
+    <router-view></router-view>
+
     </main>
+
 </template>
 
 <style scoped>

@@ -3,7 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <h1>수정 테스트입니다! </h1>
+
   <RouterView/>
 </template>
 
