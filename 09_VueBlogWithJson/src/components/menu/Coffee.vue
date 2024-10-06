@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 import { useCoffeeStore } from "@/stores/menu";
 import { onMounted } from "vue";
 
+
 const router = useRouter();
 const { coffee } = defineProps(["coffee"]);
 
@@ -25,9 +26,10 @@ onMounted(() => {
         <RouterLink to="/smoothie">스무디</RouterLink>
         <RouterLink to="/teaAde">티,에이드</RouterLink>
         <RouterLink to="/dessert">디저트</RouterLink>
-        <RouterLink to="/order">주문내역</RouterLink>      
+        <RouterLink to="/order">주문내역</RouterLink> 
       </nav>
     <main>
+        <h1> 이거 커피 </h1>
         <div v-for="coffee in coffeeStore.coffees" class="listBox">
             <div :key="coffee.id" :coffee="coffee" @click="detailView(coffee.id)" class="itemBox">
                 <div> {{ coffee.name }}</div>

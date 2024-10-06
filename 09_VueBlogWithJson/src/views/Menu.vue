@@ -2,37 +2,56 @@
 import { useRouter } from "vue-router";
 import { useCoffeeStore } from "@/stores/menu";
 import { onMounted } from "vue";
+// 컴포넌트들 import
+import ReMenu from '@/components/menu/ReMenu.vue';
+import Coffee from '@/components/menu/Coffee.vue';
+import DeCoffee from '@/components/menu/DeCoffee.vue';
+import Smoothie from '@/components/menu/Smoothie.vue';
+import TeaAde from '@/components/menu/TeaAde.vue';
+import Dessert from '@/components/menu/Dessert.vue';
 
-const router = useRouter();
-const { coffee } = defineProps(["coffee"]);
+// 현재 선택된 메뉴를 저장하는 상태
+import { ref } from 'vue';
+const selectedMenu = ref(''); // 기본적으로 아무 메뉴도 선택되지 않음
 
-function detailView(id) {
-    router.push(`/coffee/${id}`);
+// 각 메뉴를 클릭할 때 호출하는 함수
+function selectMenu(menu) {
+  selectedMenu.value = menu;
 }
 
-const coffeeStore = useCoffeeStore();
 
-onMounted(() => {
-    coffeeStore.coffeeHandler();
-})
 </script>
 
 <template>
     <nav>
-        <RouterLink to="/reMenu">추천메뉴</RouterLink>
-        <RouterLink to="/coffee">커피</RouterLink>
-        <RouterLink to="/deCoffee">디카페인</RouterLink>
-        <RouterLink to="/smoothie">스무디</RouterLink>
-        <RouterLink to="/teaAde">티,에이드</RouterLink>
-        <RouterLink to="/dessert">디저트</RouterLink>
-        <RouterLink to="/order">주문내역</RouterLink>      
-      </nav>
+        <a href="#" @click="selectMenu('remenu')">추천메뉴</a>
+        <a href="#" @click="selectMenu('coffee')">커피</a>
+        <a href="#" @click="selectMenu('decoffee')">디카페인</a>
+        <a href="#" @click="selectMenu('smoothie')">스무디</a>
+        <a href="#" @click="selectMenu('tea-ade')">티, 에이드</a>
+        <a href="#" @click="selectMenu('dessert')">디저트</a>
+    </nav>
+    
+        <main>
+            <!-- 추천메뉴 컴포넌트 렌더링 -->
+            <ReMenu v-if="selectedMenu === 'remenu'" />
 
-    <main>
+            <!-- 커피 컴포넌트 렌더링 -->
+            <Coffee v-if="selectedMenu === 'coffee'" />
 
-    <router-view></router-view>
+            <!-- 디카페인 컴포넌트 렌더링 -->
+            <DeCoffee v-if="selectedMenu === 'decoffee'" />
 
-    </main>
+            <!-- 스무디 컴포넌트 렌더링 -->
+            <Smoothie v-if="selectedMenu === 'smoothie'" />
+
+            <!-- 티/에이드 컴포넌트 렌더링 -->
+            <TeaAde v-if="selectedMenu === 'tea-ade'" />
+
+            <!-- 디저트 컴포넌트 렌더링 -->
+            <Dessert v-if="selectedMenu === 'dessert'" />
+        </main>
+
 
 </template>
 
