@@ -23,7 +23,7 @@ function selectMenu(menu) {
 </script>
 
 <template>
-    <nav>
+    <nav class="navbar">
         <a href="#" @click="selectMenu('remenu')">추천메뉴</a>
         <a href="#" @click="selectMenu('coffee')">커피</a>
         <a href="#" @click="selectMenu('decoffee')">디카페인</a>
@@ -56,6 +56,46 @@ function selectMenu(menu) {
 </template>
 
 <style scoped>
+
+/* 네비게이션바 */
+.navbar {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  background-color: #5E7153; /* 네비게이션 배경색 */
+  padding: 15px;
+  border-radius: 10px; /* 둥근 모서리 */
+}
+
+.navbar a {
+  text-decoration: none; /* 밑줄 제거 */
+  color: #FFFFFF; /* 흰색 텍스트 */
+  background-color: #FFB834; /* 오렌지 버튼 색상 */
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease; /* 부드러운 색상 전환 */
+}
+
+.navbar a:hover {
+  background-color: #3D4B33; /* 마우스 오버 시 진한 그린 */
+}
+
+.navbar a:active {
+  background-color: #FF9933; /* 클릭 시 조금 더 진한 오렌지 */
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .navbar a {
+    margin: 10px 0;
+  }
+}
+
 main {
     display: flex;
     flex-wrap: wrap;
