@@ -18,15 +18,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav>
-        <RouterLink to="/reMenu">추천메뉴</RouterLink>
-        <RouterLink to="/coffee">커피</RouterLink>
-        <RouterLink to="/deCoffee">디카페인</RouterLink>
-        <RouterLink to="/smoothie">스무디</RouterLink>
-        <RouterLink to="/teaAde">티,에이드</RouterLink>
-        <RouterLink to="/dessert">디저트</RouterLink>
-        <RouterLink to="/order">주문내역</RouterLink>             
-      </nav>
     <main>
         <div v-for="smoothie in smoothieStore.smoothies" class="listBox">
             <div :key="smoothie.id" :smoothie="smoothie" @click="detailView(smoothie.id)" class="itemBox">

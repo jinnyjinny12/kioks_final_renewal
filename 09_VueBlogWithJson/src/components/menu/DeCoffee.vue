@@ -20,6 +20,7 @@ onMounted(() => {
 <template>
 
     <main>
+        <h1>디카페인</h1>
         <div v-for="deCoffee in deCoffeeStore.deCoffees" class="listBox">
             <div :key="deCoffee.id" :deCoffee="deCoffee" @click="detailView(deCoffee.id)" class="itemBox">
                 <div> {{ deCoffee.name }}</div>

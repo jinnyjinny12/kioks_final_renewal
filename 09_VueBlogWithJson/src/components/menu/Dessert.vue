@@ -18,6 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
+
     <nav>
         <RouterLink to="/reMenu">추천메뉴</RouterLink>
         <RouterLink to="/coffee">커피</RouterLink>
@@ -25,9 +26,10 @@ onMounted(() => {
         <RouterLink to="/smoothie">스무디</RouterLink>
         <RouterLink to="/teaAde">티,에이드</RouterLink>
         <RouterLink to="/dessert">디저트</RouterLink>
-        <RouterLink to="/order">주문내역</RouterLink>             
-      </nav>
+        <RouterLink to="/order">주문내역</RouterLink>     
+    </nav>
     <main>
+        <h1>디저트</h1>
         <div v-for="dessert in dessertStore.desserts" class="listBox">
             <div :key="dessert.id" :dessert="dessert" @click="detailView(dessert.id)" class="itemBox">
                 <div> {{ dessert.name }}</div>
