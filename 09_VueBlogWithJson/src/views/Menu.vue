@@ -10,6 +10,8 @@ import Smoothie from '@/components/menu/Smoothie.vue';
 import TeaAde from '@/components/menu/TeaAde.vue';
 import Dessert from '@/components/menu/Dessert.vue';
 
+import Cart from '@/components/menu/cart.vue';
+
 // 현재 선택된 메뉴를 저장하는 상태
 import { ref } from 'vue';
 const selectedMenu = ref(''); // 기본적으로 아무 메뉴도 선택되지 않음
@@ -51,6 +53,9 @@ function selectMenu(menu) {
             <!-- 디저트 컴포넌트 렌더링 -->
             <Dessert v-if="selectedMenu === 'dessert'" />
         </main>
+
+
+        <Cart />
 
 
 </template>
