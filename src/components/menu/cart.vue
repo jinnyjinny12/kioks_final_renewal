@@ -69,7 +69,7 @@ const totalCartPrice = computed(() => {
                 총 가격: {{ totalCartPrice }}
             </div>
            <!-- 다음 버튼 -->
-           <button @click="goToPayment">다음</button>
+           <button class="next-button" @click="goToPayment">다음</button>
     </div>
 </template>
 
