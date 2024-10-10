@@ -5,41 +5,38 @@ import ButtonHome from './ButtonHome.vue';
 
 const cartStore = useCartStore(); // Pinia store 사용
 
-
 // 총 결제금액 계산
 const totalAmount = computed(() => {
   return cartStore.cartItems.reduce((total, item) => {
-    const price = item.price || 0; // price 값이 없으면 0으로 처리
-    const quantity = item.quantity || 1; // quantity 값이 없으면 기본값 1
+    // price에 쉼표가 있을 경우 제거하고 숫자로 변환
+    const price = Number(item.price.toString().replace(/,/g, '')) || 0;
+    const quantity = item.quantity || 1;
     return total + (price * quantity);
-  }, 0).toLocaleString() + '원'; // 금액을 한국 원화 형식으로 표시
+  }, 0).toLocaleString() + '원'; // 원화 형식으로 변환
 });
 
 // 각 아이템별 수량 * 가격 계산
 const cartDetails = computed(() => {
   return cartStore.cartItems.map(item => ({
     name: item.name,
-    quantity: item.quantity || 1, // quantity 값이 없으면 기본값 1
-    totalPrice: ((item.price || 0) * (item.quantity || 1)).toLocaleString() + '원' // price와 quantity 기본값을 설정하여 NaN 방지
+    quantity: item.quantity || 1,
+    totalPrice: ((Number(item.price.toString().replace(/,/g, '')) || 0) * (item.quantity || 1)).toLocaleString() + '원'
   }));
 });
-
-
-
 </script>
 
 <template>
     <header>
       <!-- 헤더 영역 -->
-      <H1 class="custom-font">Cafe.js</H1>
+      <h1 class="custom-font">Cafe.js</h1>
       <div class="payment-select">결제수단을 선택해주세요</div>
       
       <!-- 총 결제금액 표시 -->
       <div class="total-amount">총 결제금액 <span>{{ totalAmount }}</span></div>
       
-      <!-- 메뉴별 수량*가격 표시 -->
+      <!-- 장바구니에 담긴 각 메뉴별 수량과 가격 표시 -->
       <div v-for="item in cartDetails" :key="item.name" class="menu-item">
-        {{ item.name }}: {{ item.quantity }}개 * {{ item.totalPrice }}
+        {{ item.name }}: {{ item.quantity }}개  :  {{ item.totalPrice }}
       </div>
       
       <br>

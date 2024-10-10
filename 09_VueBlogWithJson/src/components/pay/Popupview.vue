@@ -6,7 +6,9 @@ const router = useRouter();
 
 <template>
     <!-- <h1> 이건 팝업입니다</h1> -->
-    <div class="popup-container">
+    <div class="popup-total">
+
+      <div class="popup-container">
         <div clas="text"> IC카드를 삽입하시오</div>
         <img src="../../assets/image/pay.svg" alt="pay" class="pop-image" />
         <div class="button-contianer">
@@ -14,9 +16,17 @@ const router = useRouter();
           <button class="approve-button" @click="$router.push('/bill')">승인하기</button>
         </div>
     </div>
+
+    </div>
+   
 </template>
 
 <style>
+.popup-total {
+  display: flex;
+  justify-content: center ;
+}
+
 
 .popup-container {
   width: 300px; /* 팝업 컨테이너의 너비 */
