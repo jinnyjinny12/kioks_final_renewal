@@ -29,7 +29,7 @@ function addToCart(deCoffee) {
         <div> {{ deCoffee.name }} </div>
         <div> 가격 {{ deCoffee.price }} </div>
         <img :src="deCoffee.img" class="itemImage" alt="디카페인 커피 이미지" />
-        <button @click="addToCart(deCoffee)">담기</button>
+        <button @click="addToCart(deCoffee)">장바구니 추가</button>
         </div>
     </div>
   </main>
@@ -77,12 +77,23 @@ label {
   margin-left: 1%;
 }
 
-button {
-  margin-right: 1%;
-}
 
 a {
   margin-left: 10px;
   font-size: 20px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background-color: #5E7153;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3D4B33;
 }
 </style>

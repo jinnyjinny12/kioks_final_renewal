@@ -1,79 +1,122 @@
 <script setup>
-import { useCartStore } from '@/stores/cartStore';
+import { useCartStore } from '@/stores/cartStore'; // Pinia cart store import
+import { useRouter } from 'vue-router'; // Vue Router import
 
-const CartStore = useCartStore();
+const CartStore = useCartStore(); // Pinia store 사용
+const router = useRouter(); // Router instance 사용
 
+// 다음 버튼 클릭 시 /payment 페이지로 이동
+function goToPayment() {
+  router.push('/payment');
+}
 </script>
 
 <template>
     <div class="cart">
-
+        <!-- 장바구니가 비었을 때 표시할 내용 -->
         <div v-if="CartStore.cartItems.length === 0">
-        
             장바구니가 비었습니다.
         </div>
 
+        <!-- 장바구니에 아이템이 있을 때 표시할 내용 -->
         <div v-else>
-            <div v-for="item in CartStore.getCartItems()" :key="item.id" class="listBox">
+            <div v-for="item in CartStore.getCartItems()" :key="item.name" class="listBox">
                 <div class="itemBox">
-                <div>{{ item.name }}</div>
-                <div>가격: {{ item.price }}</div>
-                <img :src="item.img" class="itemImage" alt="장바구니 항목 이미지" />
-                </div>
+                    <div>{{ item.name }}</div>
+                    <div>가격: {{ item.price }}원</div>
+                    <img :src="item.img" class="itemImage" alt="장바구니 항목 이미지" />
 
+                    <!-- 수량 조정 버튼 -->
+                    <div class="quantity-controls">
+                        <button @click="CartStore.decreaseQuantity(item)">-</button>
+                        <span>{{ item.quantity }}</span>
+                        <button @click="CartStore.increaseQuantity(item)">+</button>
+                    </div>
+
+                    <!-- 아이템 삭제 버튼 -->
+                    <button @click="CartStore.removeFromCart(item)" class="remove-btn">
+                        삭제
+                    </button>
+                </div>
+              
             </div>
         </div>  
+           <!-- 다음 버튼 -->
+           <button @click="goToPayment">다음</button>
     </div>
-
 </template>
-
-
 
 <style scoped>
 .cart {
-  position: fixed; /* 장바구니를 고정 위치에 놓기 위해 사용 */
-  bottom: 0; /* 화면 하단에 위치 */
-  width: 100%; /* 장바구니가 화면 너비 전체를 차지하도록 */
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background-color: #5E7153;
-  border-top: 1px solid black; /* 상단에 경계를 추가 */
-  padding: 1%; /* 패딩을 추가하여 내용물에 여유 */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단 그림자를 추가 */
-  z-index: 10; /* 다른 요소들보다 위에 배치되도록 설정 */
-  display: flex; /* 플렉스 박스를 사용하여 내부 요소를 정렬 */
-  align-items: center; /* 내부 요소를 세로로 중앙 정렬 */
-  overflow-x: scroll; /* 카드들이 넘칠 경우 스크롤 가능하게 */
+  border-top: 1px solid black;
+  padding: 1%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
 }
 
 .listBox {
-  display: inline-block; /* 카드들이 옆으로 배치되도록 설정 */
-  margin: 0 10px; /* 각 카드 간격 */
+  display: inline-block;
+  margin: 0 10px;
 }
 
 .itemBox {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 150px; /* 카드의 너비 */
+  width: 150px;
   padding: 10px;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 카드에 그림자 추가 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .itemImage {
-  width: 80px; /* 이미지 크기를 줄임 */
+  width: 80px;
   height: 80px;
   border-radius: 4px;
   margin-bottom: 10px;
 }
 
-.itemDetails {
-  text-align: center;
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+  margin-top: 10px;
+}
+
+.quantity-controls button {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #ffb834;
+  color: white;
+  border-radius: 5px;
+}
+
+.remove-btn {
+  margin-top: 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background-color: #ff3333;
 }
 
 @media (max-width: 600px) {
-  /* 모바일 뷰에서 카드 크기 조정 */
   .itemBox {
     width: 120px;
   }

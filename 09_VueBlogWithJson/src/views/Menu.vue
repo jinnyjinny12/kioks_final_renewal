@@ -14,14 +14,12 @@ import Cart from '@/components/menu/cart.vue';
 
 // 현재 선택된 메뉴를 저장하는 상태
 import { ref } from 'vue';
-const selectedMenu = ref(''); // 기본적으로 아무 메뉴도 선택되지 않음
+const selectedMenu = ref('remenu'); // 기본적으로 '추천메뉴'가 선택됨
 
 // 각 메뉴를 클릭할 때 호출하는 함수
 function selectMenu(menu) {
   selectedMenu.value = menu;
 }
-
-
 </script>
 
 <template>
@@ -34,34 +32,30 @@ function selectMenu(menu) {
         <a href="#" @click="selectMenu('dessert')">디저트</a>
     </nav>
     
-        <main>
-            <!-- 추천메뉴 컴포넌트 렌더링 -->
-            <ReMenu v-if="selectedMenu === 'remenu'" />
+    <main>
+        <!-- 추천메뉴 컴포넌트 렌더링 -->
+        <ReMenu v-if="selectedMenu === 'remenu'" />
 
-            <!-- 커피 컴포넌트 렌더링 -->
-            <Coffee v-if="selectedMenu === 'coffee'" />
+        <!-- 커피 컴포넌트 렌더링 -->
+        <Coffee v-if="selectedMenu === 'coffee'" />
 
-            <!-- 디카페인 컴포넌트 렌더링 -->
-            <DeCoffee v-if="selectedMenu === 'decoffee'" />
+        <!-- 디카페인 컴포넌트 렌더링 -->
+        <DeCoffee v-if="selectedMenu === 'decoffee'" />
 
-            <!-- 스무디 컴포넌트 렌더링 -->
-            <Smoothie v-if="selectedMenu === 'smoothie'" />
+        <!-- 스무디 컴포넌트 렌더링 -->
+        <Smoothie v-if="selectedMenu === 'smoothie'" />
 
-            <!-- 티/에이드 컴포넌트 렌더링 -->
-            <TeaAde v-if="selectedMenu === 'tea-ade'" />
+        <!-- 티/에이드 컴포넌트 렌더링 -->
+        <TeaAde v-if="selectedMenu === 'tea-ade'" />
 
-            <!-- 디저트 컴포넌트 렌더링 -->
-            <Dessert v-if="selectedMenu === 'dessert'" />
-        </main>
+        <!-- 디저트 컴포넌트 렌더링 -->
+        <Dessert v-if="selectedMenu === 'dessert'" />
+    </main>
 
-
-        <Cart />
-
-
+    <Cart />
 </template>
 
 <style scoped>
-
 /* 네비게이션바 */
 .navbar {
   display: flex;
@@ -133,9 +127,9 @@ main {
 
 .itemImage {
     width: 50%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 8px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 8px;
 }
 
 label {
@@ -145,7 +139,7 @@ label {
 button {
     margin-right: 1%;
 }
-a{
+a {
   margin-left: 10px;
   font-size: 20px;
 }

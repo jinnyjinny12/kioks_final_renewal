@@ -1,64 +1,100 @@
 <script setup>
-import { RouterView } from 'vue-router';
-import { ref } from 'vue';
+import { useCartStore } from '@/stores/cartStore'; // cartStore import
+import { computed } from 'vue';
 import ButtonHome from './ButtonHome.vue';
-// const router = useRouter();
+
+const cartStore = useCartStore(); // Pinia store 사용
+
+
+// 총 결제금액 계산
+const totalAmount = computed(() => {
+  return cartStore.cartItems.reduce((total, item) => {
+    const price = item.price || 0; // price 값이 없으면 0으로 처리
+    const quantity = item.quantity || 1; // quantity 값이 없으면 기본값 1
+    return total + (price * quantity);
+  }, 0).toLocaleString() + '원'; // 금액을 한국 원화 형식으로 표시
+});
+
+// 각 아이템별 수량 * 가격 계산
+const cartDetails = computed(() => {
+  return cartStore.cartItems.map(item => ({
+    name: item.name,
+    quantity: item.quantity || 1, // quantity 값이 없으면 기본값 1
+    totalPrice: ((item.price || 0) * (item.quantity || 1)).toLocaleString() + '원' // price와 quantity 기본값을 설정하여 NaN 방지
+  }));
+});
+
+
+
 </script>
 
 <template>
-    <header class>
-      <!-- 팝업이 떠도 안바뀌는 곳 -->
+    <header>
+      <!-- 헤더 영역 -->
       <H1 class="custom-font">Cafe.js</H1>
       <div class="payment-select">결제수단을 선택해주세요</div>
-      <div class="total-amount">총 결제금액 <span>28,000원</span></div>
+      
+      <!-- 총 결제금액 표시 -->
+      <div class="total-amount">총 결제금액 <span>{{ totalAmount }}</span></div>
+      
+      <!-- 메뉴별 수량*가격 표시 -->
+      <div v-for="item in cartDetails" :key="item.name" class="menu-item">
+        {{ item.name }}: {{ item.quantity }}개 * {{ item.totalPrice }}
+      </div>
+      
       <br>
       <br>
       <div class="payment-method-container">
         <div class="payment-method">결제수단</div>
       </div>
     </header>
+    
     <main>
         <ButtonHome/>
     </main>
 </template>
 
 <style scoped>
+@font-face{
+  font-family:'DNFBitBitv2';
+  font-style: normal; 
+  font-weight:400; 
+  src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf')format('opentype');
+}
 
-  @font-face{
-    font-family:'DNFBitBitv2';
-    font-style: normal; 
-    font-weight:400; 
-    src:url('//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf')format('opentype')
-  }
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
-  @font-face {
-    font-family: 'BMJUA';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-    /* 모든 텍스트에 기본 폰트 적용 */
-    * {
-    font-family: 'BMJUA', sans-serif;
-    }
-  .custom-font{
-    font-family: 'DNFBitBitv2', sans-serif;
-    color: #FFB834;
-    text-shadow: 4px 4px 0 #783E19; /* X, Y, blur-radius, color */   
-    text-align: center;
-  }
-  main {
+/* 모든 텍스트에 기본 폰트 적용 */
+* {
+  font-family: 'BMJUA', sans-serif;
+}
+
+.custom-font{
+  font-family: 'DNFBitBitv2', sans-serif;
+  color: #FFB834;
+  text-shadow: 4px 4px 0 #783E19; /* X, Y, blur-radius, color */   
+  text-align: center;
+}
+
+main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  }
-  header {
+}
+
+header {
   text-align: center;
-  }
+}
+
 /* 결제수단을 선택해주세요 */
-.payment-select{
-  background-color:#FFB834;
+.payment-select {
+  background-color: #FFB834;
   color: #783E19;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -74,19 +110,30 @@ import ButtonHome from './ButtonHome.vue';
     -2px 2px 0 #FFEA28,
     2px 2px 0 #FFEA28;
 }
+
 /* 총결제금액 */
 .total-amount {
-  background-color:#f9ecc9;
+  background-color: #f9ecc9;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-top: 20px; /* 위쪽 여백 추가 */
+  margin-top: 20px;
   color: #783E19; 
 }
+
 .total-amount span {
   margin-left: 100px; /* 총 결제금액과 28,000원 사이의 간격 조정 */
 }
-  /* 결제수단 */
-  .payment-method {
+
+/* 메뉴별 수량*가격 */
+.menu-item {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+/* 결제수단 */
+.payment-method {
   display: inline-block;
   padding: 10px 20px; /* 내부 여백 */
   background-color: #f9ecc9; /* 배경색 */
@@ -95,6 +142,7 @@ import ButtonHome from './ButtonHome.vue';
   font-size: 0.8em; /* 글자 크기 */
   margin-top: 20px; /* 상단 여백 */
 }
+
 .payment-method-container {
   margin-right: 200px;
   width: auto;
